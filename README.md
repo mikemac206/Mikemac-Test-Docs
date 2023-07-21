@@ -1,5 +1,5 @@
 
-# Ludis Platform Documentation
+# Mikemac Test Documentation
 
 ## Installation
 
@@ -13,6 +13,18 @@ one with docisfy serve that's always running so your VS code constantly updates 
 Other terminal command will be running the git commands
 
 ### For local host updates:
+
+#### Docker Run
+
+```
+docker build --pull --rm -f "Dockerfile" -t mikemac206testdocumentation:latest "."
+```
+
+```
+docker run -p 3000:3000 mikemac-test-docs
+```
+
+#### Local Run
 
 ```cd <path_to_your_documentation_repo>/documentation``` # gets you to correct place
 

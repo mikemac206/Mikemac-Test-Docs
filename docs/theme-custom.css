@@ -1,0 +1,14 @@
+:root {
+    --base-font-family: 'IBM Plex Sans';
+    --heading-font-family: 'Tomorrow';
+
+    --theme-color: #A369EC;
+    --base-background-color: #fff;
+    --sidebar-background: #f5f6fa;
+    --sidebar-nav-pagelink-background-image: none;
+    --sidebar-nav-pagelink-background-image--active: none;
+    --sidebar-nav-pagelink-background-image--collapse: none;
+    --sidebar-nav-pagelink-background-image--loaded: none;
+    --sidebar-nav-link-text-decoration--hover: underline;
+    --sidebar-toggle-background: var(--sidebar-background);
+  }
