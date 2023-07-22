@@ -33,7 +33,7 @@ jobs:
         run: find "${search_dir}" "${work_dir}" -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 -I {} echo "{}"
       # Use GitHub CLI to Auto Squash-and-Merge
       - name: Enable Pull Request Automerge
-        run: gh pr merge --squash --delete-branch --auto "1"
+        run: gh pr merge --squash --delete-branch --auto "${{ github.event.pull_request.number }}"
         env:
           GH_TOKEN: ${{ github.token }}
 
