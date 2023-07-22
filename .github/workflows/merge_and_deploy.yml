@@ -1,13 +1,20 @@
 name: Mikemac Test Docs Merge
 
+# on:
+#   pull_request_review:
+#     types:
+#       - 'submitted'
+#       - 'opened'
+#       - 'reopened'
+#     branches:
+#       - 'develop'
+#       # - 'main'
+#       # - 'master'
+
 on:
-  pull_request_review:
-    types:
-      - 'submitted'
-    branches:
-      - 'develop'
-      - 'main'
-      - 'master'
+  pull_request:
+    types: [submitted, opened, reopened]
+    branches: [develop, main, master]
 
 jobs:
   alpha-squash-merge:
@@ -30,42 +37,42 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
 
-  master-squash-merge:
-    # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'master'
-    if: github.event.pull_request.base.ref == 'master'
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the repo on the runner first
-      - name: Checkout all
-        uses: actions/checkout@v3
-      # Show the current folder
-      - name: Echo current folder
-        run: echo "$PWD"
-      # Show the files in the current folder
-      - name: Echo files in current folder
-        run: find "${search_dir}" "${work_dir}" -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 -I {} echo "{}"
-      # Use GitHub CLI to Auto Squash-and-Merge
-      - name: Enable Pull Request Automerge
-        run: gh pr merge --squash --delete-branch --auto "1"
-        env:
-          GH_TOKEN: ${{ github.token }}
+  # master-squash-merge:
+  #   # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'master'
+  #   if: github.event.pull_request.base.ref == 'master'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Checkout the repo on the runner first
+  #     - name: Checkout all
+  #       uses: actions/checkout@v3
+  #     # Show the current folder
+  #     - name: Echo current folder
+  #       run: echo "$PWD"
+  #     # Show the files in the current folder
+  #     - name: Echo files in current folder
+  #       run: find "${search_dir}" "${work_dir}" -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 -I {} echo "{}"
+  #     # Use GitHub CLI to Auto Squash-and-Merge
+  #     - name: Enable Pull Request Automerge
+  #       run: gh pr merge --squash --delete-branch --auto "1"
+  #       env:
+  #         GH_TOKEN: ${{ github.token }}
 
-  main-squash-merge:
-    # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main'
-    if: github.event.pull_request.base.ref == 'main'
-    runs-on: ubuntu-latest
-    steps:
-      # Checkout the repo on the runner first
-      - name: Checkout all
-        uses: actions/checkout@v3
-      # Show the current folder
-      - name: Echo current folder
-        run: echo "$PWD"
-      # Show the files in the current folder
-      - name: Echo files in current folder
-        run: find "${search_dir}" "${work_dir}" -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 -I {} echo "{}"
-      # Use GitHub CLI to Auto Squash-and-Merge
-      - name: Enable Pull Request Automerge
-        run: gh pr merge --squash --delete-branch --auto "1"
-        env:
-          GH_TOKEN: ${{ github.token }}
+  # main-squash-merge:
+  #   # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main'
+  #   if: github.event.pull_request.base.ref == 'main'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     # Checkout the repo on the runner first
+  #     - name: Checkout all
+  #       uses: actions/checkout@v3
+  #     # Show the current folder
+  #     - name: Echo current folder
+  #       run: echo "$PWD"
+  #     # Show the files in the current folder
+  #     - name: Echo files in current folder
+  #       run: find "${search_dir}" "${work_dir}" -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 -I {} echo "{}"
+  #     # Use GitHub CLI to Auto Squash-and-Merge
+  #     - name: Enable Pull Request Automerge
+  #       run: gh pr merge --squash --delete-branch --auto "1"
+  #       env:
+  #         GH_TOKEN: ${{ github.token }}
