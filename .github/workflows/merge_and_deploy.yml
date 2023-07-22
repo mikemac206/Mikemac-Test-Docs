@@ -1,4 +1,4 @@
-name: Mikemac Test Docs Alpha Merge
+name: Mikemac Test Docs Merge
 
 on:
   pull_request_review:
@@ -11,7 +11,8 @@ on:
 
 jobs:
   alpha-squash-merge:
-    if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'develop'
+    # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'develop'
+    if: github.event.pull_request.base.ref == 'develop'
     runs-on: ubuntu-latest
     steps:
       # Checkout the repo on the runner first
@@ -30,7 +31,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
   master-squash-merge:
-    if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'master'
+    # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'master'
+    if: github.event.pull_request.base.ref == 'master'
     runs-on: ubuntu-latest
     steps:
       # Checkout the repo on the runner first
@@ -49,7 +51,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
   main-squash-merge:
-    if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main'
+    # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main'
+    if: github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
     steps:
       # Checkout the repo on the runner first
