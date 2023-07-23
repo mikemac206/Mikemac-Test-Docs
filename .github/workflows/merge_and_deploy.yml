@@ -4,12 +4,10 @@ name: Mikemac Test Docs Merge
 #   pull_request_review:
 #     types:
 #       - 'submitted'
-#       - 'opened'
-#       - 'reopened'
 #     branches:
 #       - 'develop'
-#       # - 'main'
-#       # - 'master'
+#       - 'main'
+#       - 'master'
 
 on:
   pull_request:
