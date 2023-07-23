@@ -1,17 +1,25 @@
-name: Mikemac Test Docs Alpha Merge
+name: Mikemac Test Docs Merge
+
+# on:
+#   pull_request_review:
+#     types:
+#       - 'submitted'
+#       - 'opened'
+#       - 'reopened'
+#     branches:
+#       - 'develop'
+#       # - 'main'
+#       # - 'master'
 
 on:
-  pull_request_review:
-    types:
-      - 'submitted'
-    branches:
-      - 'develop'
-      - 'main'
-      - 'master'
+  pull_request:
+    types: [submitted, opened, reopened]
+    branches: [develop, main, master]
 
 jobs:
   alpha-squash-merge:
-    if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'develop'
+    # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'develop'
+    if: github.event.pull_request.base.ref == 'develop'
     runs-on: ubuntu-latest
     steps:
       # Checkout the repo on the runner first
@@ -25,12 +33,13 @@ jobs:
         run: find "${search_dir}" "${work_dir}" -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 -I {} echo "{}"
       # Use GitHub CLI to Auto Squash-and-Merge
       - name: Enable Pull Request Automerge
-        run: gh pr merge --squash --delete-branch --auto "1"
+        run: gh pr merge --squash --delete-branch --auto "${{ github.event.pull_request.number }}"
         env:
           GH_TOKEN: ${{ github.token }}
 
   master-squash-merge:
-    if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'master'
+    # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'master' && github.event.pull_request.head.ref == 'develop'
+    if: github.event.pull_request.base.ref == 'master' && github.event.pull_request.head.ref == 'develop'
     runs-on: ubuntu-latest
     steps:
       # Checkout the repo on the runner first
@@ -44,12 +53,13 @@ jobs:
         run: find "${search_dir}" "${work_dir}" -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 -I {} echo "{}"
       # Use GitHub CLI to Auto Squash-and-Merge
       - name: Enable Pull Request Automerge
-        run: gh pr merge --squash --delete-branch --auto "1"
+        run: gh pr merge --merge --auto "${{ github.event.pull_request.number }}"
         env:
           GH_TOKEN: ${{ github.token }}
 
   main-squash-merge:
-    if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main'
+    # if: github.event.review.state == 'approved' && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'develop'
+    if: github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'develop'
     runs-on: ubuntu-latest
     steps:
       # Checkout the repo on the runner first
@@ -63,6 +73,6 @@ jobs:
         run: find "${search_dir}" "${work_dir}" -mindepth 1 -maxdepth 1 -type f -print0 | xargs -0 -I {} echo "{}"
       # Use GitHub CLI to Auto Squash-and-Merge
       - name: Enable Pull Request Automerge
-        run: gh pr merge --squash --delete-branch --auto "1"
+        run: gh pr merge --merge --auto "${{ github.event.pull_request.number }}"
         env:
           GH_TOKEN: ${{ github.token }}
